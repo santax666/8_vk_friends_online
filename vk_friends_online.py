@@ -1,37 +1,24 @@
 import vk
-import argparse
+import getpass
 
 
 APP_ID = 5651126
 
 
-def createParser():
-    parser = argparse.ArgumentParser(usage='%(prog)s [аргументы]',
-                                     description="Вывод друзей в VK, "
-                                                 "кто онлайн, "
-                                                 "с помощью %(prog)s")
-    parser.add_argument('-l', '--login', nargs='?', help="Логин пользователя")
-    parser.add_argument('-p', '--password', nargs='?', help="Пароль пользователя")
-    return parser
-
-
-def get_user_login(namespace):
-    login = namespace.login
-    if not login:
-        login = input('Пожалуйста, введите логин пользователя: ')
+def get_user_login():
+    login = input('Пожалуйста, введите логин пользователя: ')
     return login
 
 
-def get_user_password(namespace):
-    password = namespace.password
-    if not password:
-        password = input('Пожалуйста, введите пароль пользователя: ')
+def get_user_password():
+    password = getpass.getpass('Пожалуйста, введите пароль пользователя: ')
     return password
 
 
 def get_api(login, password):
+    friends = 2
     session = vk.AuthSession(app_id=APP_ID, user_login=login,
-                             user_password=password, scope=2)
+                             user_password=password, scope=friends)
     return vk.API(session)
 
 
@@ -48,11 +35,8 @@ def output_friends_to_console(api,friends_online):
 
 
 if __name__ == '__main__':
-    parser = createParser()
-    namespace = parser.parse_args()
-
-    login = get_user_login(namespace)
-    password = get_user_password(namespace)
+    login = get_user_login()
+    password = get_user_password()
     api = get_api(login, password)
 
     friends_online = get_online_friends(api)
