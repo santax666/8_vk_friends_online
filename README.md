@@ -7,7 +7,9 @@
 
 ## Запуск
 
-Введите в терминале: python3.5 vk_friends_online.py
+Введите в терминале:
+
+    python3.5 vk_friends_online.py
 
 ## Зависимости
 
